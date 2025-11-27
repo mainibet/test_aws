@@ -1,0 +1,17 @@
+resource "aws_opensearchserverless_security_policy" "encryption_policy" {
+  name        = "${var.project_name}-encryption-policy"
+  type        = "encryption"
+  description = "Encryption policy for ${var.opensearch_collection_name}"
+  
+  policy = jsonencode({
+    Rules = [
+      {
+        Resource = [
+          "collection/${var.opensearch_collection_name}"
+        ],
+        ResourceType = "collection"
+      }
+    ],
+    AWSOwnedKey = true
+  })
+}
